@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Missions - CleanGoa</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+
+<body>
+    <main class="missions-container">
+
+        <h1>My Volunteer Missions</h1>
+
+        <p class="mission-message"
+           th:if="${message}"
+           th:text="${message}"></p>
+
+        <p th:if="${#lists.isEmpty(registrations)}">
+            You have not joined any missions yet.
+        </p>
+
+        <div th:each="registration : ${registrations}"
+             class="mission-card">
+
+            <h2 th:text="${registration.mission.title}">
+                Mission Title
+            </h2>
+
+            <p th:text="${registration.mission.description}">
+                Mission description
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                <span th:text="${registration.mission.locationName}"></span>
+            </p>
+
+            <p>
+                <strong>Date and Time:</strong>
+                <span th:text="${#temporals.format(registration.mission.eventDate, 'dd-MM-yyyy HH:mm')}"></span>
+            </p>
+
+            <p>
+                <strong>Registered On:</strong>
+                <span th:text="${#temporals.format(registration.registeredAt, 'dd-MM-yyyy HH:mm')}"></span>
+            </p>
+
+            <form th:action="@{/user/missions/leave}" method="post"
+                  onsubmit="return confirm('Are you sure you want to leave this mission?');">
+
+                <input type="hidden" name="missionId"
+                       th:value="${registration.mission.id}">
+
+                <button class="mission-button" type="submit">
+                    Leave Mission
+                </button>
+            </form>
+
+        </div>
+
+        <div class="mission-links">
+            <a th:href="@{/user/missions}">Browse All Missions</a>
+            <a th:href="@{/user/dashboard}">Back to Dashboard</a>
+        </div>
+
+    </main>
+</body>
+</html>

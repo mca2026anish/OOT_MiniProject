@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard | CleanGoa</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">CleanGoa</div>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/report">Report Issue</a>
+            <a href="/map">Cleanliness Map</a>
+            <a th:href="@{/user/missions}">Volunteer Missions</a>
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="logout-btn">
+                    Logout
+                </button>
+            </form>
+        </nav>
+    </header>
+
+    <main class="hero">
+
+        <p class="tagline">WELCOME TO CLEANGOA</p>
+
+        <h1>
+            Together, Let's Keep
+            <span>Goa Clean.</span>
+        </h1>
+
+        <p class="description">
+            Report cleanliness issues, explore the map,
+            and join volunteer missions to protect Goa's environment.
+        </p>
+
+
+<div class="buttons">
+    <a th:href="@{/report}" class="primary-btn">
+        Report an Issue
+    </a>
+
+    <a th:href="@{/user/reports}" class="secondary-btn">
+        My Reports
+    </a>
+
+    <a th:href="@{/user/missions}" class="secondary-btn">
+        Explore Missions
+    </a>
+
+    <a th:href="@{/user/my-missions}" class="secondary-btn">
+    My Missions
+</a>
+
+</div>
+
+
+    </main>
+
+    <footer>
+        <p>CleanGoa — Small Actions, Cleaner Goa.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report an Issue | CleanGoa</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">CleanGoa</div>
+
+        <nav>
+            <a href="/user/dashboard">Dashboard</a>
+            <a href="/report">Report an Issue</a>
+        </nav>
+    </header>
+
+    <main class="signup-container">
+
+        <div class="signup-card">
+
+            <h1>Report a Cleanliness Issue</h1>
+
+            <p class="signup-description">
+                Help us keep Goa clean by reporting a problem.
+            </p>
+
+            <div class="error-message"
+                 th:if="${error}"
+                 th:text="${error}">
+            </div>
+
+           <form th:action="@{/report}"
+      method="post"
+      enctype="multipart/form-data">
+
+                <label for="title">Issue Title</label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    maxlength="150"
+                    placeholder="Example: Garbage near beach entrance"
+                    required>
+
+                <label for="description">Description</label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="5"
+                    maxlength="2000"
+                    placeholder="Describe the cleanliness issue"
+                    required></textarea>
+
+                <label for="locationName">Location</label>
+
+                <input
+                    type="text"
+                    id="locationName"
+                    name="locationName"
+                    maxlength="250"
+                    placeholder="Example: Baga Beach, Goa"
+                    required>
+
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+
+
+                    <p>Select the exact location of the cleanliness issue on the map.</p>
+
+<div id="map"
+     style="height: 350px; width: 100%; border-radius: 8px; margin: 15px 0;">
+</div>
+
+<p id="selected-location">
+    No map location selected yet.
+</p>
+
+                    <div class="form-group">
+    <label for="image">Upload Garbage Photo</label>
+
+    <input
+        type="file"
+        id="image"
+        name="image"
+        accept="image/jpeg,image/png,image/webp"
+    >
+
+    <small>Optional: JPG, PNG, or WEBP. Maximum size: 5 MB.</small>
+</div>
+
+                <button type="submit" class="primary-btn">
+                    Submit Report
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <p>CleanGoa — Small Actions, Cleaner Goa.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    const goaCenter = [15.4909, 73.8278];
+
+    const map = L.map('map').setView(goaCenter, 10);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let marker = null;
+
+    map.on('click', function (event) {
+        const latitude = event.latlng.lat;
+        const longitude = event.latlng.lng;
+
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
+
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        marker = L.marker([latitude, longitude]).addTo(map);
+
+        document.getElementById('selected-location').textContent =
+            'Selected coordinates: ' +
+            latitude.toFixed(6) + ', ' +
+            longitude.toFixed(6);
+    });
+</script>
+
+</body>
+</html>

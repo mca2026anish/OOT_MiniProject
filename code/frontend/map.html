@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cleanliness Map | CleanGoa</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CleanGoa</div>
+
+    <nav>
+        <a th:href="@{/user/dashboard}">Home</a>
+        <a th:href="@{/report}">Report Issue</a>
+        <a th:href="@{/map}">Cleanliness Map</a>
+        <a th:href="@{/user/missions}">Volunteer Missions</a>
+    </nav>
+</header>
+
+<main class="missions-container">
+
+    <h1>Cleanliness Map</h1>
+
+    <p>Explore reported cleanliness issues in Goa.</p>
+
+    <div class="report-summary">
+    <p>Total Reports: <span id="totalReports"></span></p>
+    <p>Pending: <span id="pendingReports"></span></p>
+    <p>Approved: <span id="approvedReports"></span></p>
+    <p>Rejected: <span id="rejectedReports"></span></p>
+</div>
+
+    <div id="map"
+         style="height: 500px; width: 100%; margin-top: 20px;">
+    </div>
+
+
+<div style="margin-top: 15px;">
+    <strong>Filter Reports:</strong>
+
+    <select id="statusFilter" style="padding: 8px; margin-left: 10px;">
+        <option value="ALL">All Reports</option>
+        <option value="PENDING">Pending</option>
+        <option value="APPROVED">Approved</option>
+        <option value="REJECTED">Rejected</option>
+    </select>
+</div>
+
+<div style="margin-top: 12px;">
+    <strong>Marker Colours:</strong>
+    <span style="margin-left: 12px; color: #E7A23B;">● Pending</span>
+    <span style="margin-left: 12px; color: #27834A;">● Approved</span>
+    <span style="margin-left: 12px; color: #D64545;">● Rejected</span>
+</div>
+
+
+    <p class="mission-links">
+        <a th:href="@{/user/dashboard}">Back to Dashboard</a>
+    </p>
+
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+<script th:inline="javascript">
+    const map = L.map('map').setView([15.2993, 74.1240], 9);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const reports = /*[[${mapReports}]]*/ [];
+
+    const totalReports = reports.length;
+
+const pendingReports = reports.filter(
+    report => report.status === "PENDING"
+).length;
+
+const approvedReports = reports.filter(
+    report => report.status === "APPROVED"
+).length;
+
+const rejectedReports = reports.filter(
+    report => report.status === "REJECTED"
+).length;
+
+document.getElementById("totalReports").textContent = totalReports;
+document.getElementById("pendingReports").textContent = pendingReports;
+document.getElementById("approvedReports").textContent = approvedReports;
+document.getElementById("rejectedReports").textContent = rejectedReports;
+
+
+const reportMarkers = [];
+
+reports.forEach(function(report) {
+
+    let markerColor = "#E7A23B";
+
+    if (report.status === "APPROVED") {
+        markerColor = "#27834A";
+    } else if (report.status === "REJECTED") {
+        markerColor = "#D64545";
+    }
+
+    const markerIcon = L.divIcon({
+        className: "report-marker",
+        html: '<div style="background-color:' + markerColor +
+              '; width:18px; height:18px; border:2px solid white;' +
+              'border-radius:50%; box-shadow:0 1px 4px #555;"></div>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+    });
+
+    const marker = L.marker(
+        [report.latitude, report.longitude],
+        { icon: markerIcon }
+    );
+
+
+
+let popupContent =
+    '<strong>' + escapeHtml(report.title) + '</strong>' +
+    '<br>Location: ' + escapeHtml(report.location) +
+    '<br>Status: ' + escapeHtml(report.status) +
+    '<br><strong>Description:</strong> ' +
+    escapeHtml(report.description);
+
+
+if (report.imagePath) {
+    popupContent +=
+        '<br><img src="/images/' + encodeURIComponent(report.imagePath) +
+        '" alt="Report photo" ' +
+        'style="width:180px; max-width:100%; margin-top:8px; border-radius:6px;">';
+}
+
+if (report.createdAt) {
+    popupContent +=
+        '<br>Submitted: ' + escapeHtml(report.createdAt.replace('T', ' '));
+}
+
+marker.bindPopup(popupContent);
+
+
+    reportMarkers.push({
+        marker: marker,
+        status: report.status
+    });
+
+    marker.addTo(map);
+});
+
+
+document.getElementById("statusFilter").addEventListener("change", function() {
+
+    const selectedStatus = this.value;
+    const visibleMarkers = [];
+
+    reportMarkers.forEach(function(item) {
+
+        map.removeLayer(item.marker);
+
+        if (selectedStatus === "ALL" || item.status === selectedStatus) {
+            item.marker.addTo(map);
+            visibleMarkers.push(item.marker);
+        }
+    });
+
+    if (visibleMarkers.length > 0) {
+        const markerGroup = L.featureGroup(visibleMarkers);
+        map.fitBounds(markerGroup.getBounds(), { padding: [30, 30] });
+    }
+});
+
+
+    function escapeHtml(value) {
+        const element = document.createElement('span');
+        element.textContent = value == null ? '' : String(value);
+        return element.innerHTML;
+    }
+</script>
+
+</body>
+</html>

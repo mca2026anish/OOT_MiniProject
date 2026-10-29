@@ -1,0 +1,643 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8faf8;
+    color: #26352b;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 8%;
+    background-color: white;
+    border-bottom: 1px solid #e5ebe5;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #247447;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #344438;
+    font-size: 15px;
+}
+
+nav a:hover {
+    color: #247447;
+}
+
+.login-btn {
+    padding: 10px 20px;
+    border: 1px solid #247447;
+    border-radius: 6px;
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 20px 90px;
+}
+
+.tagline {
+    color: #247447;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-size: 52px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+}
+
+.hero h1 span {
+    display: block;
+    color: #247447;
+}
+
+.description {
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+    color: #667268;
+    font-size: 17px;
+}
+
+.buttons {
+    margin-top: 32px;
+}
+
+.primary-btn,
+.secondary-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 24px;
+    margin: 6px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.primary-btn {
+    background-color: #247447;
+    color: white;
+}
+
+.secondary-btn {
+    border: 1px solid #247447;
+    color: #247447;
+}
+
+.primary-btn:hover {
+    background-color: #195b35;
+}
+
+.secondary-btn:hover {
+    background-color: #eaf3ec;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 40px 8% 80px;
+}
+
+.feature {
+    flex: 1;
+    max-width: 330px;
+    background-color: white;
+    padding: 30px;
+    border: 1px solid #e5ebe5;
+    border-radius: 10px;
+}
+
+.feature h2 {
+    color: #247447;
+    margin-bottom: 15px;
+}
+
+.feature p {
+    color: #667268;
+    line-height: 1.7;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #667268;
+    border-top: 1px solid #e5ebe5;
+}
+
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .hero {
+        padding: 65px 20px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature {
+        width: 100%;
+    }
+}
+
+/* Signup Page */
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    min-height: 75vh;
+}
+
+.signup-card {
+    width: 100%;
+    max-width: 450px;
+    background-color: white;
+    padding: 35px;
+    border: 1px solid #e5ebe5;
+    border-radius: 10px;
+}
+
+.signup-card h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.signup-description {
+    text-align: center;
+    color: #667268;
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+.signup-card label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-top: 18px;
+}
+
+.signup-card input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd5cc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.signup-card input:focus {
+    outline: 2px solid #247447;
+    border-color: #247447;
+}
+
+.signup-card button {
+    width: 100%;
+    margin: 25px 0 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.signup-footer {
+    text-align: center;
+    margin-top: 18px;
+    color: #667268;
+}
+
+.signup-footer a {
+    color: #247447;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.success-message {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #e5f6e9;
+    color: #176333;
+}
+
+.error-message {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #fde8e7;
+    color: #a12622;
+}
+
+.logout-btn {
+    padding: 10px 18px;
+    background-color: #247447;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.logout-btn:hover {
+    background-color: #195b35;
+}
+
+nav form {
+    margin: 0;
+}
+
+.signup-card textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd5cc;
+    border-radius: 6px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    resize: vertical;
+}
+
+.signup-card textarea:focus {
+    outline: 2px solid #247447;
+    border-color: #247447;
+}
+
+.status-approved {
+    color: #247447;
+    background-color: #e0f3e7;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #b42318;
+    background-color: #fde8e7;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #8a6100;
+    background-color: #fff1c2;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+}
+
+.reports-table th,
+.reports-table td {
+    border: 1px solid #dce5dc;
+    padding: 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.reports-table th {
+    background-color: #e8f3eb;
+    color: #245b3b;
+}
+
+.reports-table tr:nth-child(even) {
+    background-color: #f7faf7;
+}
+
+.reports-table td {
+    overflow-wrap: anywhere;
+}
+
+
+.report-statistics {
+    margin: 35px auto;
+    width: 100%;
+    max-width: 900px;
+}
+
+.report-statistics h2 {
+    margin-bottom: 20px;
+}
+
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.stat-card {
+    display: block;
+    padding: 20px;
+    border: 1px solid #dce5dc;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    background: white;
+}
+
+.stat-card h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+}
+
+.stat-card p {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .statistics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Volunteer Missions */
+
+.missions-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.missions-container h1 {
+    color: #247447;
+    margin-bottom: 25px;
+}
+
+.mission-card {
+    background: white;
+    border: 1px solid #e5ebe5;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.mission-card h2 {
+    color: #247447;
+    margin-bottom: 12px;
+}
+
+.mission-card p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.mission-button {
+    display: inline-block;
+    padding: 11px 20px;
+    margin-top: 10px;
+    background-color: #247447;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mission-button:hover {
+    background-color: #195b35;
+}
+
+.mission-message {
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: #e5f6e9;
+    color: #176333;
+    border-radius: 6px;
+}
+
+.mission-links {
+    margin: 20px 0;
+}
+
+.mission-links a {
+    color: #247447;
+    margin-right: 15px;
+}
+
+
+/* Map report summary */
+.report-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.report-summary p {
+    background-color: #f5f7f5;
+    padding: 18px;
+    margin: 0;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #e0e5e0;
+}
+
+.report-summary span {
+    display: block;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* Make summary cards fit smaller screens */
+@media (max-width: 700px) {
+    .report-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* Admin Missions Page */
+
+.admin-missions h1 {
+    margin-bottom: 10px;
+}
+
+.admin-missions h2 {
+    margin: 25px 0 15px;
+}
+
+.admin-mission-form {
+    background: white;
+    padding: 25px;
+    border: 1px solid #e5ebe5;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.admin-mission-form label {
+    display: block;
+    font-weight: bold;
+    margin: 15px 0 7px;
+}
+
+.admin-mission-form input,
+.admin-mission-form textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccd5cc;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.admin-mission-form textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.admin-mission-form input:focus,
+.admin-mission-form textarea:focus {
+    outline: 2px solid #247447;
+    border-color: #247447;
+}
+
+.admin-mission-form button {
+    margin-top: 20px;
+}
+
+.admin-missions .mission-card {
+    margin-top: 15px;
+}
+
+.admin-missions .mission-card h3 {
+    color: #247447;
+    margin-bottom: 12px;
+}
+
+.admin-missions .mission-card p {
+    line-height: 1.6;
+}
+
+.admin-missions .secondary-btn {
+    display: inline-block;
+    margin: 0;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+    .admin-mission-form {
+        padding: 16px;
+    }
+}
+
+.mission-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.mission-delete-btn {
+    background-color: #d64545;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+/* Improve the admin reports table */
+.reports-table {
+    table-layout: auto;
+}
+
+.reports-table th:nth-child(5),
+.reports-table td:nth-child(5) {
+    min-width: 105px;
+    white-space: nowrap;
+}
+
+.reports-table td:nth-child(5) span {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.reports-table th:nth-child(7),
+.reports-table td:nth-child(7) {
+    min-width: 150px;
+}
+
+.report-action-form {
+    display: inline-block;
+    margin: 0 4px 6px 0;
+}
+
+.report-action-form button {
+    padding: 7px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.report-approve-btn {
+    background-color: #e0f3e7;
+    color: #247447;
+}
+
+.report-reject-btn {
+    background-color: #fde8e7;
+    color: #b42318;
+}
+
+
+.report-delete-btn {
+    background-color: #b42318;
+    color: white;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.report-delete-btn:hover {
+    background-color: #8f1b13;
+}

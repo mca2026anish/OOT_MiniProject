@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Mission - CleanGoa</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<main class="missions-container admin-missions">
+
+    <h1>Edit Mission</h1>
+
+    <form class="admin-mission-form"
+          th:action="@{/admin/missions/edit/{id}(id=${mission.id})}"
+          th:object="${mission}"
+          method="post">
+
+        <label>Mission Title</label>
+        <input type="text" th:field="*{title}" required maxlength="255">
+
+        <label>Description</label>
+        <textarea th:field="*{description}" required maxlength="2000"></textarea>
+
+        <label>Location</label>
+        <input type="text" th:field="*{locationName}" required maxlength="255">
+
+        <label>Event Date and Time</label>
+        <input type="datetime-local" th:field="*{eventDate}" required>
+
+        <label>Maximum Volunteers</label>
+        <input type="number" th:field="*{maxVolunteers}" min="1" required>
+
+        <button class="mission-button" type="submit">Save Changes</button>
+    </form>
+
+    <p class="mission-links">
+        <a class="secondary-btn" th:href="@{/admin/missions}">
+            Cancel and Return
+        </a>
+    </p>
+
+</main>
+</body>
+</html>

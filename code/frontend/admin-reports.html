@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Reports | CleanGoa</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<p th:if="${success}"
+   th:text="${success}">
+</p>
+
+<body>
+
+<header>
+    <div class="logo">CleanGoa Admin</div>
+
+    <nav>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<main>
+    <h1>Manage Cleanliness Reports</h1>
+
+    <p>Review reports submitted by CleanGoa users.</p>
+
+    <form th:action="@{/admin/reports}" method="get">
+
+    <label for="status">Filter by status:</label>
+
+    <select id="status" name="status">
+        <option value="ALL"
+                th:selected="${selectedStatus == 'ALL'}">
+            All Reports
+        </option>
+
+        <option value="PENDING"
+                th:selected="${selectedStatus == 'PENDING'}">
+            Pending
+        </option>
+
+        <option value="APPROVED"
+                th:selected="${selectedStatus == 'APPROVED'}">
+            Approved
+        </option>
+
+        <option value="REJECTED"
+                th:selected="${selectedStatus == 'REJECTED'}">
+            Rejected
+        </option>
+    </select>
+
+    <button type="submit">Apply Filter</button>
+
+</form>
+
+    <p th:if="${#lists.isEmpty(reports)}">
+        No reports have been submitted yet.
+    </p>
+
+   <table class="reports-table"
+       th:unless="${#lists.isEmpty(reports)}">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Photo</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Date Submitted</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="report : ${reports}">
+                <td th:text="${report.title}"></td>
+                <td>
+    <img
+        th:if="${report.imagePath != null and !report.imagePath.isEmpty()}"
+        th:src="@{/images/{filename}(filename=${report.imagePath})}"
+        alt="Report photo"
+        style="max-width: 120px; max-height: 90px;
+               object-fit: contain; border-radius: 5px;">
+    <span th:if="${report.imagePath == null or report.imagePath.isEmpty()}">
+        No photo
+    </span>
+</td>
+                <td th:text="${report.description}"></td>
+                
+            <td>
+    <span th:text="${report.locationName}"></span>
+
+<br>
+
+<a
+    th:if="${report.latitude != null and report.longitude != null}"
+    th:href="'https://www.openstreetmap.org/?mlat=' + ${report.latitude} +
+             '&amp;mlon=' + ${report.longitude} +
+             '#map=16/' + ${report.latitude} + '/' + ${report.longitude}"
+    target="_blank"
+    rel="noopener noreferrer">
+    View Map
+</a>
+
+<span th:if="${report.latitude == null or report.longitude == null}">
+    <br>
+    Map location unavailable
+</span>
+
+</td>
+
+
+                <td>
+    <span
+        th:text="${report.status}"
+        th:classappend="${report.status == 'APPROVED'} ? ' status-approved' :
+                        (${report.status == 'REJECTED'} ? ' status-rejected' : ' status-pending')">
+    </span>
+</td>
+                <td th:text="${#temporals.format(report.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
+                <td>
+                    
+<div>
+    <form th:action="@{/admin/reports/{id}/approve(id=${report.id})}"
+          method="post"
+          class="report-action-form">
+
+        <button type="submit" class="report-approve-btn">
+            Approve
+        </button>
+    </form>
+
+    <form th:action="@{/admin/reports/{id}/reject(id=${report.id})}"
+          method="post"
+          class="report-action-form">
+
+        <button type="submit" class="report-reject-btn">
+            Reject
+        </button>
+    </form>
+</div>
+
+
+<form th:if="${report.status == 'APPROVED'}"
+      th:action="@{/admin/reports/{id}/delete(id=${report.id})}"
+      method="post"
+      onsubmit="return confirm('Are you sure you want to permanently delete this report?');"
+      class="report-action-form">
+
+    <button type="submit" class="report-delete-btn">
+        Delete
+    </button>
+</form>
+
+
+
+</td>
+            </tr>
+        </tbody>
+    </table>
+
+</main>
+
+</body>
+</html>

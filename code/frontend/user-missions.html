@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleanliness Missions - CleanGoa</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <main class="missions-container">
+
+        <h1>Available Cleanliness Missions</h1>
+
+        <p class="mission-message"
+           th:if="${message}"
+           th:text="${message}"></p>
+
+        <p th:if="${#lists.isEmpty(missions)}">
+            No cleanliness missions are available yet.
+        </p>
+
+        <div th:each="m : ${missions}" class="mission-card">
+
+            <h2 th:text="${m.title}">Mission Title</h2>
+
+            <p th:text="${m.description}">Mission description</p>
+
+            <p>
+                <strong>Location:</strong>
+                <span th:text="${m.locationName}"></span>
+            </p>
+
+            <p>
+                <strong>Date and Time:</strong>
+                <span th:text="${#temporals.format(m.eventDate, 'dd-MM-yyyy HH:mm')}"></span>
+            </p>
+
+            <p>
+                <strong>Maximum Volunteers:</strong>
+                <span th:text="${m.maxVolunteers}"></span>
+            </p>
+
+            <p>
+                <strong>Volunteers Registered:</strong>
+                <span th:text="${volunteerCounts[m.id]}"></span>
+                /
+                <span th:text="${m.maxVolunteers}"></span>
+            </p>
+
+            <div th:if="${joinedMissionIds.contains(m.id)}">
+                <p><strong>Already Joined</strong></p>
+            </div>
+
+            <form th:unless="${joinedMissionIds.contains(m.id)}"
+                  th:action="@{/user/missions/join}" method="post">
+
+                <input type="hidden" name="missionId" th:value="${m.id}">
+
+                <button class="mission-button" type="submit">
+                    Join Mission
+                </button>
+            </form>
+
+        </div>
+
+        <div class="mission-links">
+            <a th:href="@{/user/my-missions}">My Missions</a>
+            <a th:href="@{/user/dashboard}">Back to Dashboard</a>
+        </div>
+
+    </main>
+</body>
+</html>

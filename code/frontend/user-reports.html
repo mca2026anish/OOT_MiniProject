@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Reports | CleanGoa</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">CleanGoa</div>
+
+        <nav>
+            <a href="/user/dashboard">Dashboard</a>
+            <a href="/report">Report an Issue</a>
+        </nav>
+    </header>
+
+    <main class="signup-container">
+
+        <div class="signup-card" style="max-width: 850px;">
+
+            <h1>My Reports</h1>
+
+            <div class="success-message"
+                 th:if="${success}"
+                 th:text="${success}">
+            </div>
+
+            <p th:if="${#lists.isEmpty(reports)}">
+                You haven't submitted any reports yet.
+            </p>
+
+            <div th:each="report : ${reports}"
+                 style="border-bottom: 1px solid #e5ebe5;
+                        padding: 20px 0;">
+
+                <h2 th:text="${report.title}">Report title</h2>
+
+                <div th:if="${report.imagePath != null and !report.imagePath.isEmpty()}">
+    <img
+        th:src="@{/images/{filename}(filename=${report.imagePath})}"
+        alt="Cleanliness report photo"
+        style="max-width: 300px; max-height: 220px;
+               object-fit: contain; border-radius: 8px;
+               margin: 10px 0;">
+</div>
+
+                <p th:text="${report.description}">
+                    Report description
+                </p>
+
+               <p>
+    Location:
+    <span th:text="${report.locationName}"></span>
+</p>
+
+<p th:if="${report.latitude != null and report.longitude != null}">
+    <a
+        th:href="'https://www.openstreetmap.org/?mlat=' + ${report.latitude} +
+                 '&amp;mlon=' + ${report.longitude} +
+                 '#map=16/' + ${report.latitude} + '/' + ${report.longitude}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="primary-btn">
+        View Location on Map
+    </a>
+</p>
+
+<p th:if="${report.latitude == null or report.longitude == null}">
+    Map location not available for this report.
+</p>
+
+
+                <p>
+    Status:
+    <strong
+        th:text="${report.status}"
+        th:classappend="${report.status == 'APPROVED'} ? ' status-approved' :
+                        (${report.status == 'REJECTED'} ? ' status-rejected' : ' status-pending')">
+    </strong>
+</p>
+
+
+                <p>
+                    Submitted:
+                    <span th:text="${#temporals.format(
+                        report.createdAt,
+                        'dd-MM-yyyy HH:mm'
+                    )}"></span>
+                </p>
+
+            </div>
+
+            <a href="/report" class="primary-btn">
+                Submit Another Report
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <p>CleanGoa — Small Actions, Cleaner Goa.</p>
+    </footer>
+
+</body>
+</html>

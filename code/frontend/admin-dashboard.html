@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | CleanGoa</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">CleanGoa Admin</div>
+
+        <nav>
+            <a href="/">Home</a>
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="logout-btn">
+                    Logout
+                </button>
+            </form>
+        </nav>
+    </header>
+
+    <main class="hero">
+
+        <p class="tagline">ADMINISTRATION</p>
+
+        <h1>
+            Welcome to the
+            <span>Admin Dashboard</span>
+        </h1>
+
+        <p class="description">
+            Manage cleanliness reports and organize
+            volunteer missions to help protect Goa's environment.
+        </p>
+
+        <div class="buttons">
+            <a href="/admin/reports" class="primary-btn">
+                Manage Reports
+            </a>
+
+            <a href="/admin/missions" class="secondary-btn">
+                Manage Missions
+            </a>
+        </div>
+
+        
+<div class="report-statistics">
+
+    <h2>Report Statistics</h2>
+
+    <div class="statistics-grid">
+
+        <a href="/admin/reports?status=ALL" class="stat-card">
+            <h3>Total Reports</h3>
+            <p th:text="${totalReports}">0</p>
+        </a>
+
+        <a href="/admin/reports?status=PENDING" class="stat-card">
+            <h3>Pending Reports</h3>
+            <p th:text="${pendingReports}">0</p>
+        </a>
+
+        <a href="/admin/reports?status=APPROVED" class="stat-card">
+            <h3>Approved Reports</h3>
+            <p th:text="${approvedReports}">0</p>
+        </a>
+
+        <a href="/admin/reports?status=REJECTED" class="stat-card">
+            <h3>Rejected Reports</h3>
+            <p th:text="${rejectedReports}">0</p>
+        </a>
+
+    </div>
+</div>
+
+    </main>
+
+    <footer>
+        <p>CleanGoa — Small Actions, Cleaner Goa.</p>
+    </footer>
+
+</body>
+</html>
